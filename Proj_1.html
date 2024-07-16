@@ -155,15 +155,37 @@ AFRAME.registerComponent('kinema-body', {
         <img id="Concrete" src="Concrete046_1K-JPG/Concrete046_1K-JPG_Color.jpg">
         <img id="Concrete-NDX" src="Concrete046_1K-JPG/Concrete046_1K-JPG_NormalDX.jpg">
         <img id="Concrete-NGL" src="Concrete046_1K-JPG/Concrete046_1K-JPG_NormalGL.jpg">
-        <img>
+        <img id="Intro_1" src="Screenshot_2024-07-16_at_9.48.11_PM-removebg-preview.png">
+        <img id="Intro_2" src="Screenshot_2024-07-16_at_9.49.18_PM-removebg-preview.png">
     </a-assets>
     <a-scene physics="debug: true">
-      <a-img></a-img>  
+      <a-plane static-body position="0 2 -6.9" material="src: #Intro_1" width="10"></a-plane> 
+      <a-plane static-body position="0 1 -6.9" material="src: #Intro_2" width="10"></a-plane>  
+ 
       <a-box static-body position="0 1.5 -7.5" height="3" width="16"></a-box>  
       <a-box static-body position="7.5 1.5 0" height="3" width="14" rotation="0 90 0"></a-box>  
       <a-box static-body position="-7.5 1.5 0" height="3" width="14" rotation="0 90 0"></a-box>
       <a-box static-body position="-5 1.5 7.5" height="3" width="6"></a-box>  
-      <a-box static-body position="5 1.5 7.5" height="3" width="6"></a-box>  
+      <a-box static-body position="5 1.5 7.5" height="3" width="6"></a-box>
+      <a-box static-body position="-11.5 1.5 0" height="3" width="24" rotation="0 90 0"></a-box>
+      <a-box static-body position="0 1.5 -11.5" height="3" width="22"></a-box>
+      <a-box static-body position="0 1.5 11.5" height="3" width="22"></a-box>
+      <a-box static-body position="11.5 1.5 -7" height="3" width="10" rotation="0 90 0"></a-box>
+      <a-box static-body position="11.5 1.5 7" height="3" width="10" rotation="0 90 0"></a-box>
+      <a-box static-body position="-9.5 1.5 0" height="3" width="3"></a-box>
+      <a-box static-body position="0 1.5 -15.5" height="3" width="32"></a-box>
+      <a-box static-body position="-15.5 1.5 -13" height="3" width="4" rotation="0 90 0"></a-box>
+      <a-box static-body position="15.5 1.5 -13" height="3" width="4" rotation="0 90 0"></a-box>
+      <a-box static-body position="15.5 1.5 4" height="3" width="22" rotation="0 90 0"></a-box>
+      <a-box static-body position="-15.5 1.5 -3" height="3" width="6" rotation="0 90 0"></a-box>
+      <a-box static-body position="9 1.5 15.5" height="3" width="14"></a-box>
+
+
+      <a-box static-body position="12.5 1.5 -19.5" height="3" width="15"></a-box>  
+      <a-box static-body position="19.5 1.5 -17" height="3" width="4" rotation="0 90 0"></a-box>
+
+
+
 
       <a-box static-body position="0 3 48" height="6" width="100" depth="2" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
       <a-box static-body position="0 3 -48" height="6" width="100" depth="2" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
@@ -173,7 +195,7 @@ AFRAME.registerComponent('kinema-body', {
       <a-sky repeat="10 10" material="color: #FFFFFF; src: #Illusion"></a-sky>
 
       <a-entity kinema-body="radius: 0.8" movement-controls="fly: false" position="0 0 4" look-controls>
-        <a-entity camera position="0 1 0" ></a-entity>
+        <a-entity camera position="0 1 50" ></a-entity>
       </a-entity>
 
     </a-scene>
