@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="//aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.0.0/dist/aframe-extras.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
+    <script>
+const EPS = 0.000001;
+AFRAME.registerComponent('kinema-body', {
+  dependencies: ['velocity'],
+  schema: {
+    mass:           { default: 5 },
+    radius:         { default: 1.3 },
+    linearDamping:  { default: 0.05 },
+    enableSlopes:   { default: true },
+    enableJumps:    { default: false },
+  },
+
+  init: function () {
+    this.system = this.el.sceneEl.systems.physics;
+    this.system.addComponent(this);
+
+    const el = this.el,
+        data = this.data,
+        position = (new CANNON.Vec3()).copy(el.object3D.getWorldPosition(new THREE.Vector3()));
+
+    this.body = new CANNON.Body({
+      material: this.system.getMaterial('staticMaterial'),
+      position: position,
+      mass: data.mass,
+      linearDamping: data.linearDamping,
+      fixedRotation: true
+    });
+    this.body.addShape(
+      new CANNON.Sphere(data.radius),
+      new CANNON.Vec3(0, data.radius, 0)
+    );
+
+    this.body.el = this.el;
+    this.el.body = this.body;
+    this.system.addBody(this.body);
+
+    if (el.hasAttribute('wasd-controls')) {
+      console.warn('[kinema-body] Not compatible with wasd-controls, use movement-controls.');
+    }
+  },
+
+  remove: function () {
+    this.system.removeBody(this.body);
+    this.system.removeComponent(this);
+    delete this.el.body;
+  },
+
+  beforeStep: function (t, dt) {
+    if (!dt) return;
+
+    const el = this.el;
+    const data = this.data
+    const body = this.body;
+
+    if (!data.enableJumps) body.velocity.set(0, 0, 0);
+    body.position.copy(el.getAttribute('position'));
+  },
+
+  step: (function () {
+    const velocity = new THREE.Vector3(),
+        normalizedVelocity = new THREE.Vector3(),
+        currentSurfaceNormal = new THREE.Vector3(),
+        groundNormal = new THREE.Vector3();
+
+    return function (t, dt) {
+      if (!dt) return;
+
+      let body = this.body,
+          data = this.data,
+          didCollide = false,
+          height, groundHeight = -Infinity,
+          groundBody,
+          contacts = this.system.getContacts();
+
+      dt = Math.min(dt, this.system.data.maxInterval * 1000);
+
+      groundNormal.set(0, 0, 0);
+      velocity.copy(this.el.getAttribute('velocity'));
+      body.velocity.copy(velocity);
+
+      for (var i = 0, contact; contact = contacts[i]; i++) {
+        if (!contact.enabled) { continue; }
+        if (body.id === contact.bi.id) {
+          contact.ni.negate(currentSurfaceNormal);
+        } else if (body.id === contact.bj.id) {
+          currentSurfaceNormal.copy(contact.ni);
+        } else {
+          continue;
+        }
+
+        didCollide = body.velocity.dot(currentSurfaceNormal) < -EPS;
+        if (didCollide && currentSurfaceNormal.y <= 0.5) {
+          velocity.projectOnPlane(currentSurfaceNormal);
+        } else if (currentSurfaceNormal.y > 0.5) {
+          height = body.id === contact.bi.id
+            ? Math.abs(contact.rj.y + contact.bj.position.y)
+            : Math.abs(contact.ri.y + contact.bi.position.y);
+          if (height > groundHeight) {
+            groundHeight = height;
+            groundNormal.copy(currentSurfaceNormal);
+            groundBody = body.id === contact.bi.id ? contact.bj : contact.bi;
+          }
+        }
+      }
+
+      normalizedVelocity.copy(velocity).normalize();
+      if (groundBody && (!data.enableJumps || normalizedVelocity.y < 0.5)) {
+        if (!data.enableSlopes) {
+          groundNormal.set(0, 1, 0);
+        } else if (groundNormal.y < 1 - EPS) {
+          groundNormal.copy(this.raycastToGround(groundBody, groundNormal));
+        }
+        velocity.projectOnPlane(groundNormal);
+
+      } else if (this.system.driver.world) {
+
+        velocity.add(this.system.driver.world.gravity.scale(dt * 4.0 / 1000));
+      }
+
+      body.velocity.copy(velocity);
+      this.el.setAttribute('velocity', body.velocity);
+      this.el.setAttribute('position', body.position);
+    };
+  }()),
+
+
+  raycastToGround: function (groundBody, groundNormal) {
+    let ray,
+        hitNormal,
+        vFrom = this.body.position,
+        vTo = this.body.position.clone();
+
+    ray = new CANNON.Ray(vFrom, vTo);
+    ray._updateDirection();
+    ray.intersectBody(groundBody);
+
+    if (!ray.hasHit) return groundNormal;
+    hitNormal = ray.result.hitNormalWorld;
+    return Math.abs(hitNormal.y) > Math.abs(groundNormal.y) ? hitNormal : groundNormal;
+  }
+})
+    </script>
+  <body>
+    <a-assets>
+        <img id="Illusion" src="HD-wallpaper-optical-illusion-8k.jpg">
+        <img id="Tiles" src="Tiles133A_1K-JPG/Tiles133A_1K-JPG_Color.jpg">
+        <img id="Tiles-NDX" src="Tiles133A_1K-JPG/Tiles133A_1K-JPG_NormalDX.jpg">
+        <img id="Tiles-NGL" src="Tiles133A_1K-JPG/Tiles133A_1K-JPG_NormalGL.jpg">
+        <img id="Concrete" src="Concrete046_1K-JPG/Concrete046_1K-JPG_Color.jpg">
+        <img id="Concrete-NDX" src="Concrete046_1K-JPG/Concrete046_1K-JPG_NormalDX.jpg">
+        <img id="Concrete-NGL" src="Concrete046_1K-JPG/Concrete046_1K-JPG_NormalGL.jpg">
+        <img>
+    </a-assets>
+    <a-scene physics="debug: true">
+      <a-img></a-img>  
+      <a-box static-body position="0 1.5 -7.5" height="3" width="16"></a-box>  
+      <a-box static-body position="7.5 1.5 0" height="3" width="14" rotation="0 90 0"></a-box>  
+      <a-box static-body position="-7.5 1.5 0" height="3" width="14" rotation="0 90 0"></a-box>
+      <a-box static-body position="-5 1.5 7.5" height="3" width="6"></a-box>  
+      <a-box static-body position="5 1.5 7.5" height="3" width="6"></a-box>  
+
+      <a-box static-body position="0 3 48" height="6" width="100" depth="2" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
+      <a-box static-body position="0 3 -48" height="6" width="100" depth="2" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
+      <a-box static-body position="48 3 0" height="6" width="96" depth="2" rotation="0 90 0" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
+      <a-box static-body position="-48 3 0" height="6" width="96" depth="2" rotation="0 90 0" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
+      <a-plane static-body position="0 0 0" rotation="-90 0 0" width="100" height="100" repeat="20 20" material="color: #FFFFFF; src: #Tiles; normal-map: #Tiles-NDX; normal-texture-repeat: 20 20; normal-map: #Tiles-NGL; normal-texture-repeat: 20 20; roughness: 0.3"></a-plane>
+      <a-sky repeat="10 10" material="color: #FFFFFF; src: #Illusion"></a-sky>
+
+      <a-entity kinema-body="radius: 0.8" movement-controls="fly: false" position="0 0 4" look-controls>
+        <a-entity camera position="0 1 0" ></a-entity>
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>
