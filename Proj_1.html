@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>3D Maze Game</title>
     <script src="//aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.0.0/dist/aframe-extras.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
@@ -157,45 +158,66 @@ AFRAME.registerComponent('kinema-body', {
         <img id="Concrete-NGL" src="Concrete046_1K-JPG/Concrete046_1K-JPG_NormalGL.jpg">
         <img id="Intro_1" src="Screenshot_2024-07-16_at_9.48.11_PM-removebg-preview.png">
         <img id="Intro_2" src="Screenshot_2024-07-16_at_9.49.18_PM-removebg-preview.png">
+        <img id="Success_1" src="Screenshot_2024-07-16_at_11.23.12_PM-removebg-preview.png">
+        <img id="Success_2" src="Screenshot_2024-07-16_at_11.23.43_PM-removebg-preview.png">
+        <img id="Creator_1" src="Screenshot_2024-07-16_at_11.42.24_PM-removebg-preview.png">
+        <img id="Creator_2" src="Screenshot_2024-07-16_at_11.43.00_PM-removebg-preview.png">
+        <img id="Illusion_2" src="ea726533983e716c1fb6a9fdbd86ffd1.jpg">
+        <img id="Caution_1" src="Screenshot_2024-07-16_at_11.58.45_PM-removebg-preview.png">
+        <img id="Caution_2" src="Screenshot_2024-07-16_at_11.59.15_PM-removebg-preview.png">
+        <img id="Caution_3" src="Screenshot_2024-07-16_at_11.59.39_PM-removebg-preview.png">
+
     </a-assets>
     <a-scene physics="debug: true">
       <a-plane static-body position="0 2 -6.9" material="src: #Intro_1" width="10"></a-plane> 
       <a-plane static-body position="0 1 -6.9" material="src: #Intro_2" width="10"></a-plane>  
  
-      <a-box static-body position="0 1.5 -7.5" height="3" width="16"></a-box>  
-      <a-box static-body position="7.5 1.5 0" height="3" width="14" rotation="0 90 0"></a-box>  
-      <a-box static-body position="-7.5 1.5 0" height="3" width="14" rotation="0 90 0"></a-box>
-      <a-box static-body position="-5 1.5 7.5" height="3" width="6"></a-box>  
-      <a-box static-body position="5 1.5 7.5" height="3" width="6"></a-box>
-      <a-box static-body position="-11.5 1.5 0" height="3" width="24" rotation="0 90 0"></a-box>
-      <a-box static-body position="0 1.5 -11.5" height="3" width="22"></a-box>
-      <a-box static-body position="0 1.5 11.5" height="3" width="22"></a-box>
-      <a-box static-body position="11.5 1.5 -7" height="3" width="10" rotation="0 90 0"></a-box>
-      <a-box static-body position="11.5 1.5 7" height="3" width="10" rotation="0 90 0"></a-box>
-      <a-box static-body position="-9.5 1.5 0" height="3" width="3"></a-box>
-      <a-box static-body position="0 1.5 -15.5" height="3" width="32"></a-box>
-      <a-box static-body position="-15.5 1.5 -13" height="3" width="4" rotation="0 90 0"></a-box>
-      <a-box static-body position="15.5 1.5 -13" height="3" width="4" rotation="0 90 0"></a-box>
-      <a-box static-body position="15.5 1.5 4" height="3" width="22" rotation="0 90 0"></a-box>
-      <a-box static-body position="-15.5 1.5 -3" height="3" width="6" rotation="0 90 0"></a-box>
-      <a-box static-body position="9 1.5 15.5" height="3" width="14"></a-box>
-      <a-box static-body position="-9 1.5 15.5" height="3" width="14"></a-box>
-      <a-box static-body position="0 1.5 19.5" height="3" width="40"></a-box>  
-      <a-box static-body position="-7 1.5 -19.5" height="3" width="14"></a-box>  
-      <a-box static-body position="-19.5 1.5 -6" height="3" width="28" rotation="0 90 0"></a-box>
-      <a-box static-body position="-19.5 1.5 16" height="3" width="6" rotation="0 90 0"></a-box>
-      <a-box static-body position="19.5 1.5 14" height="3" width="10" rotation="0 90 0"></a-box>
-      <a-box static-body position="19.5 1.5 -3" height="3" width="14" rotation="0 90 0"></a-box>
-      <a-box static-body position="-15.5 1.5 10" height="3" width="10" rotation="0 90 0"></a-box>
-      <a-box static-body position="12.5 1.5 -19.5" height="3" width="15"></a-box>  
-      <a-box static-body position="19.5 1.5 -17" height="3" width="4" rotation="0 90 0"></a-box>
-      <a-box static-body position="15.5 1.5 -18" height="3" width="4" rotation="0 90 0"></a-box>
-      <a-box static-body position="-18 1.5 -5.5" height="3" width="4"></a-box>
+      <a-box static-body position="0 1.5 -7.5" height="3" width="16" material="src: #Illusion_2; repeat: 2 1"></a-box>  
+      <a-box static-body position="7.5 1.5 0" height="3" width="14" rotation="0 90 0" material="src: #Illusion_2; repeat: 2 1"></a-box>  
+      <a-box static-body position="-7.5 1.5 0" height="3" width="14" rotation="0 90 0" material="src: #Illusion_2; repeat: 2 1"></a-box>
+      <a-box static-body position="-5 1.5 7.5" height="3" width="6" material="src: #Illusion_2; repeat: 1 1"></a-box>  
+      <a-box static-body position="5 1.5 7.5" height="3" width="6" material="src: #Illusion_2; repeat:  1"></a-box>
+      <a-box static-body position="-11.5 1.5 0" height="3" width="24" rotation="0 90 0" material="src: #Illusion_2; repeat: 3 1"></a-box>
+      <a-box static-body position="0 1.5 -11.5" height="3" width="22" material="src: #Illusion_2; repeat: 3 1"></a-box>
+      <a-box static-body position="0 1.5 11.5" height="3" width="22" material="src: #Illusion_2; repeat: 2 1"></a-box>
+      <a-box static-body position="11.5 1.5 -7" height="3" width="10" rotation="0 90 0" material="src: #Illusion_2; repeat: 2 1"></a-box>
+      <a-box static-body position="11.5 1.5 7" height="3" width="10" rotation="0 90 0" material="src: #Illusion_2; repeat: 2 1"></a-box>
+      <a-box static-body position="-9.5 1.5 0" height="3" width="3" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="0 1.5 -15.5" height="3" width="32" material="src: #Illusion_2; repeat: 4 1"></a-box>
+      <a-box static-body position="-15.5 1.5 -13" height="3" width="4" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="15.5 1.5 -13" height="3" width="4" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="15.5 1.5 4" height="3" width="22" rotation="0 90 0" material="src: #Illusion_2; repeat: 3 1"></a-box>
+      <a-box static-body position="-15.5 1.5 -3" height="3" width="6" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="9 1.5 15.5" height="3" width="14" material="src: #Illusion_2; repeat: 2 1"></a-box>
+      <a-box static-body position="-9 1.5 15.5" height="3" width="14" material="src: #Illusion_2; repeat: 2 1"></a-box>
+      <a-box static-body position="0 1.5 19.5" height="3" width="40" material="src: #Illusion_2; repeat: 5 1"></a-box>  
+      <a-box static-body position="-7 1.5 -19.5" height="3" width="14" material="src: #Illusion_2; repeat: 2 1"></a-box>  
+      <a-box static-body position="-19.5 1.5 -6" height="3" width="28" rotation="0 90 0" material="src: #Illusion_2; repeat: 3 1"></a-box>
+      <a-box static-body position="-19.5 1.5 16" height="3" width="6" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="19.5 1.5 14" height="3" width="10" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="19.5 1.5 -3" height="3" width="14" rotation="0 90 0" material="src: #Illusion_2; repeat: 2 1"></a-box>
+      <a-box static-body position="-15.5 1.5 10" height="3" width="10" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="12.5 1.5 -19.5" height="3" width="15" material="src: #Illusion_2; repeat: 2 1"></a-box>  
+      <a-box static-body position="19.5 1.5 -17" height="3" width="4" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="15.5 1.5 -18" height="3" width="4" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="-18 1.5 -5.5" height="3" width="4" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="-12 1.5 17" height="3" width="4" rotation="0 90 0" material="src: #Illusion_2; repeat: 1 1"></a-box>
+      <a-box static-body position="17 1.5 -3" height="3" width="4" material="src: #Illusion_2; repeat: 2 1"></a-box>  
 
 
-
-
-
+      <a-plane static-body position="46.9 4 0" material="src: #Success_1" width="10" rotation="0 -90 0" scale="6 1.5"></a-plane>
+      <a-plane static-body position="46.9 2 0" material="src: #Success_2" width="10" rotation="0 -90 0" scale="6 1.5"></a-plane>  
+      <a-plane static-body position="-46.9 4 0" material="src: #Success_1" width="10" rotation="0 90 0" scale="6 1.5"></a-plane>        
+      <a-plane static-body position="-46.9 2 0" material="src: #Success_2" width="10" rotation="0 90 0" scale="6 1.5"></a-plane>        
+      <a-plane static-body position="0 4 46.9" material="src: #Success_1" width="10" rotation="0 180 0" scale="6 1.5"></a-plane> 
+      <a-plane static-body position="0 2 46.9" material="src: #Success_2" width="10" rotation="0 180 0" scale="6 1.5"></a-plane> 
+      <a-plane static-body position="0 4 -46.9" material="src: #Success_1" width="10" scale="6 1.5"></a-plane>  
+      <a-plane static-body position="0 2 -46.9" material="src: #Success_2" width="10" scale="6 1.5"></a-plane>  
+      <a-plane static-body position="0 4 -2" material="src: #Creator_1" width="2" rotation="90 0 0" scale="6 3"></a-plane>  
+      <a-plane static-body position="0 4 2" material="src: #Creator_2" width="3" rotation="90 0 0" scale="6 3"></a-plane>  
+      <a-plane static-body position="0 0.1 -6" material="src: #Caution_1" width="3" rotation="-90 0 0" scale="4 3"></a-plane>        
+      <a-plane static-body position="0 0.1 -2" material="src: #Caution_2" width="3" rotation="-90 0 0" scale="4 3"></a-plane>        
+      <a-plane static-body position="0 0.1 2" material="src: #Caution_3" width="3" rotation="-90 0 0" scale="4 3"></a-plane>  
       <a-box static-body position="0 3 48" height="6" width="100" depth="2" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
       <a-box static-body position="0 3 -48" height="6" width="100" depth="2" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
       <a-box static-body position="48 3 0" height="6" width="96" depth="2" rotation="0 90 0" repeat="15 2" material="src: #Concrete; normal-map: #Concrete-NDX; normal-texture-repeat: 15 1; normal-map: #Concrete-NGL; normal-texture-repeat: 15 1; roughness: 0.9"></a-box>
